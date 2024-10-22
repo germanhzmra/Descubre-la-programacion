@@ -1,54 +1,56 @@
 void main (){
-  animate (ejecutar);
-  animate (dibuja);
+
+  animate (menu);
   
 }
-  void ejecutar () {
-    
-    control ();
-    imagen () ;
-    
-    
-      }
-void imagen (){
-  fill(192,232,233);
-  rect (120,120,80,80);
-  fill(255,0,0);
-  text ("PLAY",137,170);
-  
+void menu () {
+  control1BTN1();
+  imagenBTN1();
 }
-void control (){
-  background(255,255,255);
+void imagenBTN1 () {
+  fill(100,51,163);
+  rect(120,120,80,80);
+  fill(62,163,98);
+  textSize(15);
+  text("PLAY",137,170);
+}
+void control1BTN1 () {
+  if (mousePressed)
+    if (mouseButton == LEFTBUTTON)
+    if (mouseX > 120 && mouseX < 200 && mouseY < 200) {
+  background(33,173,57) ;
+    animate (play);
+  }} 
+   
+void imagenExit () {
+  fill(170,72,199);
+  rect(10,10,10,10);
+  fill(17,12,88);
+  textSize(10);
+  text("Exit", 21,20);
+}
+void controlExit (){
+  //background(255,255,255);
   println ("X: " + mouseX);
   println ("Y: " + mouseY);
-  if (mousePressed){
-    if (mouseButton == LEFTBUTTON){
-      if (mouseX > 120 && mouseX < 200 && mouseY >120 && mouseY < 200);
-      background(0,255,141);
-     
-    }
-  }
-  }
-void dibuja (){
-  background(59,63,161);
   if (mousePressed) {
-    if(mouseButton == RIGHTBUTTON)
-      ellipse(mouseX, mouseY, 50,50);
-    animate(otra);
+    if (mouseButton == LEFTBUTTON) {
+      if (mouseX > 10 && mouseX < 20 && mouseY > 10 && mouseY < 20){
+        background(205,186,186) ;
+        animate (menu);
+      }
     }
   }
-
-
-
-void otra (){
-  background(122,169,207);
-  text ("Hola",50,50);
-  if (mousePressed) {
-    if(mouseButton == RIGHTBUTTON){
-      animate(dibuja);
-    }
+}
+void play () {
+  background(241,217,217);
+  imagenExit();
+  controlExit();
+       if (mousePressed) {}
+  if (mouseButton == LEFTBUTTON) {
     
-    }
+  }}
+
   }
 
 
