@@ -1,16 +1,22 @@
 void main (){
 
   animate (menu);
+ 
   
 }
 void menu () {
   control1BTN1();
   imagenBTN1();
+  control1BTN2();
+  imagenBTN2();
+  control1BTN3();
+  imagenBTN3();
 }
 void imagenBTN1 () {
-  fill(100,51,163);
+  background(195,215,65) ;
+  fill(194,172,223);
   rect(120,120,80,80);
-  fill(62,163,98);
+  fill(18,134,137);
   textSize(15);
   text("PLAY",137,170);
 }
@@ -18,32 +24,81 @@ void control1BTN1 () {
   if (mousePressed)
     if (mouseButton == LEFTBUTTON)
     if (mouseX > 120 && mouseX < 200 && mouseY < 200) {
-  background(33,173,57) ;
+  
     animate (play);
   }} 
-   
+
+void imagenBTN2 () {
+  fill(194,172,223);
+  rect(40,220,100,40);
+  fill(18,134,137);
+  textSize(8);
+  text("INSTRUCCIONES",46,245);
+}
+void control1BTN2 () {
+  if (mousePressed)
+    if (mouseButton == LEFTBUTTON)
+    if (mouseX > 40 && mouseX < 140 && mouseY > 220 && mouseY < 260) {
+  background(195,215,65) ;
+    animate (instrucciones);
+  }} 
+
+void imagenBTN3 () {
+  fill(194,172,223);
+  rect(180,220,100,40);
+  fill(18,134,137);
+  textSize(8);
+  text("CREDITOS",203,245);
+}
+void control1BTN3 () {
+  if (mousePressed)
+    if (mouseButton == LEFTBUTTON)
+    if (mouseX > 180 && mouseX < 280 && mouseY > 220 && mouseY < 260) {
+  background(195,215,65) ;
+    animate (instrucciones);
+  }} 
+
+
 void imagenExit () {
-  fill(170,72,199);
+  fill(237,236,64);
   rect(10,10,10,10);
-  fill(17,12,88);
+  fill(0,0,0);
   textSize(10);
   text("Exit", 21,20);
 }
 void controlExit (){
-  //background(255,255,255);
+  //background(195,215,65);
   println ("X: " + mouseX);
   println ("Y: " + mouseY);
   if (mousePressed) {
     if (mouseButton == LEFTBUTTON) {
       if (mouseX > 10 && mouseX < 20 && mouseY > 10 && mouseY < 20){
-        background(205,186,186) ;
+        background(195,215,65) ;
         animate (menu);
       }
     }
   }
 }
 void play () {
-  background(241,217,217);
+  background(92,195,168);
+  imagenExit();
+  controlExit();
+       if (mousePressed) {}
+  if (mouseButton == LEFTBUTTON) {
+    
+  }}
+void instrucciones () {
+  background(91,201,172);
+  imagenExit();
+  controlExit();
+       if (mousePressed) {}
+  if (mouseButton == LEFTBUTTON) {
+    
+  }}
+void creditos () {
+  background(92,195,168,0);
+ textSize(10);
+    text ("By GERMAN HERNANDEZ ZAMORA", 120,120);
   imagenExit();
   controlExit();
        if (mousePressed) {}
@@ -51,6 +106,5 @@ void play () {
     
   }}
 
-  }
 
 
