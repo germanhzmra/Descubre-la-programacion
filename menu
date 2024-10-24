@@ -55,7 +55,7 @@ void control1BTN3 () {
     if (mouseButton == LEFTBUTTON)
     if (mouseX > 180 && mouseX < 280 && mouseY > 220 && mouseY < 260) {
   background(195,215,65) ;
-    animate (instrucciones);
+    animate (creditos);
   }} 
 
 
@@ -89,6 +89,11 @@ void play () {
   }}
 void instrucciones () {
   background(91,201,172);
+textSize (10) ;
+text ("-Mueve con las teclas WASD o flechas", 50, 100) ;
+text ("-Usa
+text ("-Salta para inter cepaci: 50 120, 50, 140) :
+text ("-Pausa el juego con 'Esc' ", 50, 160) ;
   imagenExit();
   controlExit();
        if (mousePressed) {}
@@ -99,6 +104,7 @@ void creditos () {
   background(92,195,168,0);
  textSize(10);
     text ("By GERMAN HERNANDEZ ZAMORA", 120,120);
+text ("2° de bachillerato C", 50, 140) ;
   imagenExit();
   controlExit();
        if (mousePressed) {}
