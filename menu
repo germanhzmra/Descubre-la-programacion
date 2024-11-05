@@ -91,8 +91,8 @@ void instrucciones () {
   background(91,201,172);
 textSize (10) ;
 text ("-Mueve con las teclas WASD o flechas", 50, 100) ;
-text ("-Usa
-text ("-Salta para inter cepaci: 50 120, 50, 140) :
+text ("-Usa el raton para moverte", 50, 120);
+text ("-para saltar pulsa enter", 50, 140);
 text ("-Pausa el juego con 'Esc' ", 50, 160) ;
   imagenExit();
   controlExit();
@@ -103,7 +103,7 @@ text ("-Pausa el juego con 'Esc' ", 50, 160) ;
 void creditos () {
   background(92,195,168,0);
  textSize(10);
-    text ("By GERMAN HERNANDEZ ZAMORA", 120,120);
+    text ("By GERMAN HERNANDEZ ZAMORA", 50,120);
 text ("2° de bachillerato C", 50, 140) ;
   imagenExit();
   controlExit();
@@ -111,6 +111,3 @@ text ("2° de bachillerato C", 50, 140) ;
   if (mouseButton == LEFTBUTTON) {
     
   }}
-
-
-
