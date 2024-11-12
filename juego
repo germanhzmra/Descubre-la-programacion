@@ -1,0 +1,18 @@
+void main () {
+  int altura = 10;
+int anchura = 10;
+
+  for (int n= 1; n <= 4; n=n +1 ){
+    line (10, altura, 310, altura) ;
+    altura = altura + 100;
+      
+   
+  }
+  for (int n = 1; n <= 4 ; n = n +1) {
+    line (anchura, 10,anchura,310);
+    anchura = anchura + 100;
+  }
+if (mousePressed)
+  if (mouseButton == LEFTBUTTON)
+  
+  }
