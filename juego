@@ -1,7 +1,9 @@
-void main () {
-  int altura = 10;
+int altura = 10;
 int anchura = 10;
-
+void main () {
+ 
+ animate(menu);                                                                                                                                                                                                                                                                                                   
+}
   for (int n= 1; n <= 4; n=n +1 ){
     line (10, altura, 310, altura) ;
     altura = altura + 100;
@@ -12,7 +14,13 @@ int anchura = 10;
     line (anchura, 10,anchura,310);
     anchura = anchura + 100;
   }
+void menu () {
+  animate(boton);
+}
+  void boton () {
 if (mousePressed)
   if (mouseButton == LEFTBUTTON)
-  
+      if (mouseX > 10 && mouseX < 60 && mouseY > 10 && mouseY < 60){
+  ellipse(60,60,30,30);
+  }
   }
