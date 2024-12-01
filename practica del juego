@@ -6,13 +6,11 @@ int startY = 310;
 int[][] obstacles = {
     {100, 100, 30}, {200, 150, 30}, {250, 200, 30}, {300, 50, 30}, {150, 250, 30},
     {50, 50, 30}, {70, 80, 30}, {120, 30, 30}, {10, 20, 30}, {270, 270, 30},
-    
     {50, 120, 15}, {180, 90, 15}, {230, 180, 15}, {300, 120, 15}, {50, 200, 15},
     {220, 230, 15}, {160, 100, 15}, {100, 250, 15}, {270, 200, 15}, {180, 300, 15},
     {40, 180, 15}, {220, 50, 15}, {60, 160, 15}, {240, 90, 15}, {190, 300, 15},
     {110, 180, 15}  
 };
-
 
 int goalX = 230; 
 int goalY = 10; 
@@ -26,62 +24,180 @@ int interval = 1000;
 int screenWidth = 400;
 int screenHeight = 400;
 
+boolean gameStarted = false;  // Variable para saber si el juego ha comenzado
+
 void main() {
-  animate(ejecutar);
+  animate(menu);  // Inicia con el menú
+}
+
+void menu() {
+  control1BTN1();
+  imagenBTN1();
+  control1BTN2();
+  imagenBTN2();
+  control1BTN3();
+  imagenBTN3();
+}
+
+void imagenBTN1() {
+  background(195, 215, 65);
+  fill(194, 172, 223);
+  rect(120, 120, 80, 80);
+  fill(18, 134, 137);
+  textSize(15);
+  text("PLAY", 137, 170);
+}
+
+void control1BTN1() {
+  if (mousePressed) {
+    if (mouseButton == LEFTBUTTON) {
+      if (mouseX > 120 && mouseX < 200 && mouseY < 200) {
+        gameStarted = true;  // Cambia a true cuando el botón Play es presionado
+        animate(play);       // Inicia el juego
+      }
+    }
+  }
+}
+
+void imagenBTN2() {
+  fill(194, 172, 223);
+  rect(40, 220, 100, 40);
+  fill(18, 134, 137);
+  textSize(8);
+  text("INSTRUCCIONES", 46, 245);
+}
+
+void control1BTN2() {
+  if (mousePressed) {
+    if (mouseButton == LEFTBUTTON) {
+      if (mouseX > 40 && mouseX < 140 && mouseY > 220 && mouseY < 260) {
+        background(195, 215, 65);
+        animate(instrucciones);
+      }
+    }
+  }
+}
+
+void imagenBTN3() {
+  fill(194, 172, 223);
+  rect(180, 220, 100, 40);
+  fill(18, 134, 137);
+  textSize(8);
+  text("CREDITOS", 203, 245);
+}
+
+void control1BTN3() {
+  if (mousePressed) {
+    if (mouseButton == LEFTBUTTON) {
+      if (mouseX > 180 && mouseX < 280 && mouseY > 220 && mouseY < 260) {
+        background(195, 215, 65);
+        animate(creditos);
+      }
+    }
+  }
+}
+
+void imagenExit() {
+  fill(237, 236, 64);
+  rect(10, 10, 10, 10);
+  fill(0, 0, 0);
+  textSize(10);
+  text("Exit", 21, 20);
+}
+
+void controlExit() {
+  if (mousePressed) {
+    if (mouseButton == LEFTBUTTON) {
+      if (mouseX > 10 && mouseX < 20 && mouseY > 10 && mouseY < 20) {
+        background(195, 215, 65);
+        animate(menu);  // Vuelve al menú principal
+      }
+    }
+  }
+}
+
+void play() {
+  if (!gameStarted) return;  // Asegúrate de que el juego no arranque antes de que se pulse el botón Play
+  
+  background(92, 195, 168);
+  imagenExit();
+  controlExit();
+  ejecutar();  // Llama a la función que ejecuta el juego (jugador y lógica de colisiones)
+
+  if (gameOver || gameWon) {
+    displayEndMessage();
+  }
+}
+
+void instrucciones() {
+  background(91, 201, 172);
+  textSize(10);
+  text("- Mueve con las teclas WASD o flechas", 50, 100);
+  text("- Usa el ratón para moverte", 50, 120);
+  text("- Para saltar pulsa Enter", 50, 140);
+  text("- Pausa el juego con 'Esc'", 50, 160);
+  imagenExit();
+  controlExit();
+}
+
+void creditos() {
+  background(92, 195, 168, 0);
+  textSize(10);
+  text("By GERMAN HERNANDEZ ZAMORA", 50, 120);
+  text("2° de bachillerato C", 50, 140);
+  imagenExit();
+  controlExit();
 }
 
 void ejecutar() {
   if (gameOver || gameWon) {
-    displayEndMessage(); 
+    displayEndMessage();
   } else {
     player();
     controles();
     if (timerStarted) {
-      updateTimer();  
+      updateTimer();
     }
   }
 }
 
 void player() {
-  background(0, 0, 255); 
-  fill(255, 100, 100); 
-  ellipse(x, y, 15, 20); 
+  background(0, 0, 255);
+  fill(255, 100, 100);
+  ellipse(x, y, 15, 20);
 
   for (int i = 0; i < obstacles.length; i++) {
-    fill(255, 255, 0); 
-    int obstacleSize = obstacles[i][2]; 
-    rect(obstacles[i][0], obstacles[i][1], obstacleSize, obstacleSize); 
+    fill(255, 255, 0);
+    int obstacleSize = obstacles[i][2];
+    rect(obstacles[i][0], obstacles[i][1], obstacleSize, obstacleSize);
   }
 
-  
-  fill(0, 255, 0); 
-  rect(goalX, goalY, 60, 30); 
-  
+  fill(0, 255, 0);
+  rect(goalX, goalY, 60, 30);
+
   fill(0); // Color negro para el texto
   textSize(16);
-  
   int textX = goalX + 5;
-  int textY = goalY + 20; 
-  
+  int textY = goalY + 20;
   text("Meta", textX, textY);
 }
 
 void controles() {
   if (keyPressed && key == "up") {
     y = y - 1;
-    startTimer(); 
+    startTimer();
   }
   if (keyPressed && key == "down") {
     y = y + 1;
-    startTimer(); 
+    startTimer();
   }
   if (keyPressed && key == "left") {
     x = x - 1;
-    startTimer(); 
+    startTimer();
   }
   if (keyPressed && key == "right") {
     x = x + 1;
-    startTimer(); 
+    startTimer();
   }
 
   for (int i = 0; i < obstacles.length; i++) {
@@ -92,35 +208,34 @@ void controles() {
       break;
     }
   }
-  if (colisionConMeta(x, y, goalX, goalY, 60, 30)) {  
-    gameWon = true; 
+
+  if (colisionConMeta(x, y, goalX, goalY, 60, 30)) {
+    gameWon = true;
   }
 }
 
 boolean colisionConObstaculo(int playerX, int playerY, int obstacleX, int obstacleY, int obstacleSize) {
-  
   int dx = playerX - obstacleX;
   int dy = playerY - obstacleY;
-
   return dx >= 0 && dx <= obstacleSize && dy >= 0 && dy <= obstacleSize;
 }
+
 boolean colisionConMeta(int playerX, int playerY, int goalX, int goalY, int goalWidth, int goalHeight) {
-  
   return playerX >= goalX && playerX <= goalX + goalWidth &&
          playerY >= goalY && playerY <= goalY + goalHeight;
 }
 
-void updateTimer() {  
-  int currentMillis = millis(); 
+void updateTimer() {
+  int currentMillis = millis();
   if (currentMillis - previousMillis >= interval) {
-    previousMillis = currentMillis; 
+    previousMillis = currentMillis;
     if (timeRemaining > 0) {
-      timeRemaining--; 
+      timeRemaining--;
     } else {
-      gameOver = true; 
+      gameOver = true;
     }
   }
-  
+
   fill(255);
   textSize(16);
   text("Tiempo: " + timeRemaining, 10, 30);
@@ -129,20 +244,21 @@ void updateTimer() {
 void startTimer() {
   if (!timerStarted) {
     timerStarted = true;
-    previousMillis = millis(); 
+    previousMillis = millis();
   }
 }
 
 void displayEndMessage() {
-  background(0, 0, 255); 
-  
+  background(0, 0, 255);
+
   if (gameWon) {
-    fill(0, 255, 0); 
+    fill(0, 255, 0);
     textSize(40);
-    text("Winner!",75,155);
+    text("Winner!", 75, 155);
   } else if (gameOver) {
-    fill(255, 0, 0); 
+    fill(255, 0, 0);
     textSize(30);
-    text("GAME OVER", 40,155);
+    text("GAME OVER", 40, 155);
   }
 }
+
