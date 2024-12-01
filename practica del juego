@@ -1,0 +1,148 @@
+int x = 10;
+int y = 310;
+int startX = 10;
+int startY = 310; 
+
+int[][] obstacles = {
+    {100, 100, 30}, {200, 150, 30}, {250, 200, 30}, {300, 50, 30}, {150, 250, 30},
+    {50, 50, 30}, {70, 80, 30}, {120, 30, 30}, {10, 20, 30}, {270, 270, 30},
+    
+    {50, 120, 15}, {180, 90, 15}, {230, 180, 15}, {300, 120, 15}, {50, 200, 15},
+    {220, 230, 15}, {160, 100, 15}, {100, 250, 15}, {270, 200, 15}, {180, 300, 15},
+    {40, 180, 15}, {220, 50, 15}, {60, 160, 15}, {240, 90, 15}, {190, 300, 15},
+    {110, 180, 15}  
+};
+
+
+int goalX = 230; 
+int goalY = 10; 
+int timeRemaining = 25; 
+boolean gameOver = false;
+boolean gameWon = false;
+boolean timerStarted = false; 
+int previousMillis = 0;  
+int interval = 1000; 
+
+int screenWidth = 400;
+int screenHeight = 400;
+
+void main() {
+  animate(ejecutar);
+}
+
+void ejecutar() {
+  if (gameOver || gameWon) {
+    displayEndMessage(); 
+  } else {
+    player();
+    controles();
+    if (timerStarted) {
+      updateTimer();  
+    }
+  }
+}
+
+void player() {
+  background(0, 0, 255); 
+  fill(255, 100, 100); 
+  ellipse(x, y, 15, 20); 
+
+  for (int i = 0; i < obstacles.length; i++) {
+    fill(255, 255, 0); 
+    int obstacleSize = obstacles[i][2]; 
+    rect(obstacles[i][0], obstacles[i][1], obstacleSize, obstacleSize); 
+  }
+
+  
+  fill(0, 255, 0); 
+  rect(goalX, goalY, 60, 30); 
+  
+  fill(0); // Color negro para el texto
+  textSize(16);
+  
+  int textX = goalX + 5;
+  int textY = goalY + 20; 
+  
+  text("Meta", textX, textY);
+}
+
+void controles() {
+  if (keyPressed && key == "up") {
+    y = y - 1;
+    startTimer(); 
+  }
+  if (keyPressed && key == "down") {
+    y = y + 1;
+    startTimer(); 
+  }
+  if (keyPressed && key == "left") {
+    x = x - 1;
+    startTimer(); 
+  }
+  if (keyPressed && key == "right") {
+    x = x + 1;
+    startTimer(); 
+  }
+
+  for (int i = 0; i < obstacles.length; i++) {
+    if (colisionConObstaculo(x, y, obstacles[i][0], obstacles[i][1], obstacles[i][2])) {
+      x = startX;
+      y = startY;
+      print("¡Chocaste con un obstáculo! Regresando al inicio.\n");
+      break;
+    }
+  }
+  if (colisionConMeta(x, y, goalX, goalY, 60, 30)) {  
+    gameWon = true; 
+  }
+}
+
+boolean colisionConObstaculo(int playerX, int playerY, int obstacleX, int obstacleY, int obstacleSize) {
+  
+  int dx = playerX - obstacleX;
+  int dy = playerY - obstacleY;
+
+  return dx >= 0 && dx <= obstacleSize && dy >= 0 && dy <= obstacleSize;
+}
+boolean colisionConMeta(int playerX, int playerY, int goalX, int goalY, int goalWidth, int goalHeight) {
+  
+  return playerX >= goalX && playerX <= goalX + goalWidth &&
+         playerY >= goalY && playerY <= goalY + goalHeight;
+}
+
+void updateTimer() {  
+  int currentMillis = millis(); 
+  if (currentMillis - previousMillis >= interval) {
+    previousMillis = currentMillis; 
+    if (timeRemaining > 0) {
+      timeRemaining--; 
+    } else {
+      gameOver = true; 
+    }
+  }
+  
+  fill(255);
+  textSize(16);
+  text("Tiempo: " + timeRemaining, 10, 30);
+}
+
+void startTimer() {
+  if (!timerStarted) {
+    timerStarted = true;
+    previousMillis = millis(); 
+  }
+}
+
+void displayEndMessage() {
+  background(0, 0, 255); 
+  
+  if (gameWon) {
+    fill(0, 255, 0); 
+    textSize(40);
+    text("Winner!",75,155);
+  } else if (gameOver) {
+    fill(255, 0, 0); 
+    textSize(30);
+    text("GAME OVER", 40,155);
+  }
+}
