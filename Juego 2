@@ -143,10 +143,10 @@ void displayEndMessage() {
   if (gameWon) {
     fill(0, 255, 0); // Color verde para el mensaje "Winner!"
     textSize(40);
-    text("Winner!", screenWidth / 2 - 100, screenHeight / 2); // Centrado manual (ajustado)
+    text("Winner!",75,155);
   } else if (gameOver) {
     fill(255, 0, 0); // Color rojo para el mensaje "Game Over"
     textSize(40);
-    text("GAME OVER", screenWidth / 2 - 120, screenHeight / 2); // Centrado manual (ajustado)
+    text("GAME OVER", 75,155);
   }
 }
