@@ -1,0 +1,152 @@
+int x = 10;
+int y = 310;
+int startX = 10;
+int startY = 310; // Posición inicial del jugador
+
+// Obstáculos (definidos como coordenadas, dispersos por el mapa)
+int[][] obstacles = {
+    {100, 100}, {200, 150}, {250, 200}, {300, 50}, {150, 250},
+    {50, 50}, {70, 80}, {120, 30}, {10, 20}, {270, 270},
+    {50, 120}, {180, 90}, {230, 180}, {300, 120}, {50, 200},
+    {220, 230}, {160, 100}, {100, 250}, {270, 200}, {180, 300},
+    {40, 180}, {220, 50}, {60, 160}, {240, 90}, {190, 300},
+    {110, 180}  // Más obstáculos
+};
+
+// Meta (coordenada que el jugador debe alcanzar)
+int goalX = 230; 
+int goalY = 10; // Desplazamos la meta hacia la izquierda
+int timeRemaining = 10; // Temporizador en segundos
+
+boolean gameOver = false;
+boolean gameWon = false;
+
+// Tamaño de la pantalla
+int screenWidth = 400;
+int screenHeight = 400;
+
+void main() {
+  animate(ejecutar);
+}
+
+void ejecutar() {
+  if (gameOver || gameWon) {
+    displayEndMessage(); // Si el juego ha terminado, mostrar el mensaje correspondiente
+  } else {
+    player();
+    controles();
+    updateTimer();
+  }
+}
+
+void player() {
+  background(0, 0, 255); // Fondo azul
+  fill(255, 100, 100); // Color rojo clarito para el jugador
+  ellipse(x, y, 15, 20); // Dibuja al jugador (más grande)
+
+  // Dibuja los obstáculos (color amarillo)
+  for (int i = 0; i < obstacles.length; i++) {
+    fill(255, 255, 0); // Color amarillo para los obstáculos
+    ellipse(obstacles[i][0], obstacles[i][1], 20, 20);
+  }
+
+  // Dibuja la meta (rectángulo 60x30, color verde)
+  fill(0, 255, 0); // Color verde para la meta
+  rect(goalX, goalY, 60, 30); // Dibuja un rectángulo de 60x30 para la meta
+  
+  // Muestra el texto "Meta" en el recuadro
+  fill(0); // Color negro para el texto
+  textSize(16);
+  
+  // Calcula la posición del texto "Meta" de forma manual (sin usar textWidth)
+  int textX = goalX + 5; // Desplazado un poco hacia la derecha para centrar
+  int textY = goalY + 20; // Posición vertical centrada en el recuadro
+  
+  text("Meta", textX, textY);
+}
+
+void controles() {
+  if (keyPressed && key == "up") {
+    y = y - 1;
+  }
+  if (keyPressed && key == "down") {
+    y = y + 1;
+  }
+  if (keyPressed && key == "left") {
+    x = x - 1;
+  }
+  if (keyPressed && key == "right") {
+    x = x + 1;
+  }
+
+  // Verifica si el jugador ha tocado un obstáculo
+  for (int i = 0; i < obstacles.length; i++) {
+    if (colisionConObstaculo(x, y, obstacles[i][0], obstacles[i][1])) {
+      // Si el jugador toca un obstáculo, se reinicia
+      x = startX;
+      y = startY;
+      print("¡Chocaste con un obstáculo! Regresando al inicio.\n");
+      break;
+    }
+  }
+
+  // Verifica si el jugador ha alcanzado la meta
+  if (colisionConMeta(x, y, goalX, goalY)) {
+    gameWon = true; // El jugador ha ganado
+  }
+}
+
+// Función para calcular la colisión con un obstáculo
+boolean colisionConObstaculo(int playerX, int playerY, int obstacleX, int obstacleY) {
+  // Calcula la distancia entre el jugador y el obstáculo
+  int dx = playerX - obstacleX;
+  int dy = playerY - obstacleY;
+  int distancia = (dx * dx) + (dy * dy);
+  int radioJugador = 8; // Radio de la pelota del jugador
+  int radioObstaculo = 10; // Radio del obstáculo
+  
+  return distancia < (radioJugador + radioObstaculo) * (radioJugador + radioObstaculo);
+}
+
+// Función para calcular la colisión con la meta
+boolean colisionConMeta(int playerX, int playerY, int goalX, int goalY) {
+  // Calcula la distancia entre el jugador y la meta
+  int dx = playerX - goalX;
+  int dy = playerY - goalY;
+  int distancia = (dx * dx) + (dy * dy);
+  int radioJugador = 8; // Radio de la pelota del jugador
+  int radioMeta = 30; // Tamaño más grande de la meta (más grande que los obstáculos)
+  
+  return distancia < (radioJugador + radioMeta) * (radioJugador + radioMeta);
+}
+
+void updateTimer() {
+  // Actualiza el temporizador
+  if (millis() % 1000 == 0 && timeRemaining > 0) {
+    timeRemaining--; // Resta 1 segundo
+  }
+  
+  // Si el tiempo se agotó, el jugador pierde
+  if (timeRemaining == 0) {
+    gameOver = true;
+  }
+
+  // Muestra el temporizador
+  fill(255);
+  textSize(16);
+  text("Tiempo: " + timeRemaining, 10, 30);
+}
+
+void displayEndMessage() {
+  background(0, 0, 255); // Fondo azul
+  
+  if (gameWon) {
+    fill(0, 255, 0); // Color verde para el mensaje "Winner!"
+    textSize(40);
+    text("Winner!", screenWidth / 2 - 100, screenHeight / 2); // Centrado manual (ajustado)
+  } else if (gameOver) {
+    fill(255, 0, 0); // Color rojo para el mensaje "Game Over"
+    textSize(40);
+    text("GAME OVER", screenWidth / 2 - 120, screenHeight / 2); // Centrado manual (ajustado)
+  }
+}
