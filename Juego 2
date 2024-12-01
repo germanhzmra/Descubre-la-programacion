@@ -147,6 +147,6 @@ void displayEndMessage() {
   } else if (gameOver) {
     fill(255, 0, 0); // Color rojo para el mensaje "Game Over"
     textSize(40);
-    text("GAME OVER", 75,155);
+    text("GAME OVER", 40,155);
   }
 }
