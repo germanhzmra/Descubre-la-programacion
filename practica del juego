@@ -24,10 +24,10 @@ int interval = 1000;
 int screenWidth = 400;
 int screenHeight = 400;
 
-boolean gameStarted = false;  // Variable para saber si el juego ha comenzado
+boolean gameStarted = false;  
 
 void main() {
-  animate(menu);  // Inicia con el menú
+  animate(menu);  
 }
 
 void menu() {
@@ -52,8 +52,8 @@ void control1BTN1() {
   if (mousePressed) {
     if (mouseButton == LEFTBUTTON) {
       if (mouseX > 120 && mouseX < 200 && mouseY < 200) {
-        gameStarted = true;  // Cambia a true cuando el botón Play es presionado
-        animate(play);       // Inicia el juego
+        gameStarted = true;  
+        animate(play);       
       }
     }
   }
@@ -110,19 +110,19 @@ void controlExit() {
     if (mouseButton == LEFTBUTTON) {
       if (mouseX > 10 && mouseX < 20 && mouseY > 10 && mouseY < 20) {
         background(195, 215, 65);
-        animate(menu);  // Vuelve al menú principal
+        animate(menu);  
       }
     }
   }
 }
 
 void play() {
-  if (!gameStarted) return;  // Asegúrate de que el juego no arranque antes de que se pulse el botón Play
+  if (!gameStarted) return;  
   
   background(92, 195, 168);
   imagenExit();
   controlExit();
-  ejecutar();  // Llama a la función que ejecuta el juego (jugador y lógica de colisiones)
+  ejecutar();  
 
   if (gameOver || gameWon) {
     displayEndMessage();
@@ -175,7 +175,7 @@ void player() {
   fill(0, 255, 0);
   rect(goalX, goalY, 60, 30);
 
-  fill(0); // Color negro para el texto
+  fill(0); 
   textSize(16);
   int textX = goalX + 5;
   int textY = goalY + 20;
